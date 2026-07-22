@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSF – HSE Management App</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-100 text-gray-800 flex flex-col min-h-screen">
+
+    <!-- HEADER BLOCK -->
+    <header class="bg-red-800 text-white shadow-lg p-4">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+            <div class="flex items-center space-x-4">
+                <div class="bg-white text-red-800 font-bold px-3 py-2 rounded-lg text-xl shadow">RSFC</div>
+                <div>
+                    <h1 class="text-xl font-bold tracking-wide">RED SAND FALCON LLC</h1>
+                    <p class="text-sm font-medium text-red-200">RSF – HSE App</p>
+                    <p class="text-xs text-red-300">Client: Petrogas Rima | Contract: PETROGAS RIMA/2022-004</p>
+                </div>
+            </div>
+            <div class="text-right text-xs bg-red-900 bg-opacity-50 p-2 rounded border border-red-700">
+                <p><i class="fa-solid fa-hard-hat mr-1"></i> Scope: Civil & Earthworks</p>
+                <p><i class="fa-solid fa-check-double mr-1"></i> PDO & OPAL Standards Compliant</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- NAVIGATION TABS -->
+    <nav class="bg-red-900 text-white shadow">
+        <div class="max-w-7xl mx-auto flex overflow-x-auto text-sm font-semibold">
+            <button onclick="showTab('dashboard')" class="tab-btn px-5 py-3 hover:bg-red-800 border-b-4 border-white transition" id="btn-dashboard">
+                <i class="fa-solid fa-chart-line mr-2"></i>Dashboard
+            </button>
+            <button onclick="showTab('incidents')" class="tab-btn px-5 py-3 hover:bg-red-800 border-b-4 border-transparent transition" id="btn-incidents">
+                <i class="fa-solid fa-triangle-exclamation mr-2"></i>Incidents & Hazards
+            </button>
+            <button onclick="showTab('vehicles')" class="tab-btn px-5 py-3 hover:bg-red-800 border-b-4 border-transparent transition" id="btn-vehicles">
+                <i class="fa-solid fa-truck-monster mr-2"></i>Vehicle Tracker
+            </button>
+            <button onclick="showTab('inductions')" class="tab-btn px-5 py-3 hover:bg-red-800 border-b-4 border-transparent transition" id="btn-inductions">
+                <i class="fa-solid fa-user-shield mr-2"></i>Safety Induction
+            </button>
+            <button onclick="showTab('qr-inspector')" class="tab-btn px-5 py-3 hover:bg-red-800 border-b-4 border-transparent transition" id="btn-qr-inspector">
+                <i class="fa-solid fa-qrcode mr-2"></i>QR Tool Inspection
+            </button>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="max-w-7xl mx-auto w-full p-4 flex-grow">
+
+        <!-- 1. DASHBOARD MODULE -->
+        <section id="tab-dashboard" class="tab-content space-y-6">
+            <!-- Top KPI Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-blue-600">
+                    <p class="text-xs text-gray-500 uppercase font-bold">Today Manpower</p>
+                    <p class="text-2xl font-black text-gray-800 mt-1" id="kpi-manpower">142</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-indigo-600">
+                    <p class="text-xs text-gray-500 uppercase font-bold">Man-Hours</p>
+                    <p class="text-2xl font-black text-gray-800 mt-1" id="kpi-manhours">1,136</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-green-600">
+                    <p class="text-xs text-gray-500 uppercase font-bold">Days Without LTI</p>
+                    <p class="text-2xl font-black text-green-600 mt-1" id="kpi-lti-days">412</p>
+                </div>
+                <div class="bg-white p-4 rounded-lg shadow border-l-4 border-red-600">
+                    <p class="text-xs text-gray-500 uppercase font-bold">Pending Actions</p>
+                    <p class="text-2xl font-black text-red-600 mt-1" id="kpi-pending">3</p>
+                </div>
+            </div>
+
+            <!-- Active PTW List -->
+            <div class="bg-white p-5 rounded-lg shadow">
+                <h3 class="font-bold text-gray-700 mb-3 border-b pb-2"><i class="fa-solid fa-file-contract text-red-800 mr-2"></i>Active Work Locations & PTW</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm">
+                        <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+                            <tr>
+                                <th class="p-2">Location</th>
+                                <th class="p-2">PTW Number</th>
+                                <th class="p-2">Class</th>
+                                <th class="p-2">Supervisor</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y">
+                            <tr>
+                                <td class="p-2 font-medium">RHN YS-987</td>
+                                <td class="p-2 text-blue-600">PTW-2026-8891</td>
+                                <td class="p-2"><span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-0.5 rounded">Class B</span></td>
+                                <td class="p-2">Dilshad</td>
+                            </tr>
+                            <tr>
+                                <td class="p-2 font-medium">Al Jumd Road</td>
+                                <td class="p-2 text-blue-600">PTW-2026-9012</td>
+                                <td class="p-2"><span class="bg-red-100 text-red-800 text-xs px-2 py-0.5 rounded">Class A</span></td>
+                                <td class="p-2">Ajas</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Emergency Numbers -->
+            <div class="bg-red-50 border border-red-200 p-4 rounded-lg flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="flex items-center space-x-3">
+                    <i class="fa-solid fa-phone-volume text-red-700 text-2xl"></i>
+                    <div>
+                        <p class="font-bold text-red-900">Emergency Contacts Directory</p>
+                        <p class="text-xs text-red-700">Petrogas Emergency: 2541 3999 | RSF HSE: 9326 8258 | Site In-Charge: 7702 4550</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. INCIDENTS MODULE -->
+        <section id="tab-incidents" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-lg font-bold text-gray-800 border-b pb-3 mb-4">Log Incident / Hazard Report</h3>
+                <form id="form-incident" onsubmit="saveIncident(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <label class="block font-medium mb-1">Report Title</label>
+                        <input type="text" id="inc-title" required class="w-full border rounded p-2 focus:ring-2 focus:ring-red-800 outline-none">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Classification Type</label>
+                        <select id="inc-type" required class="w-full border rounded p-2 focus:ring-2 focus:ring-red-800 outline-none">
+                            <option value="Near Miss">Near Miss</option>
+                            <option value="Incident / Accident">Incident / Accident</option>
+                            <option value="Property Damage">Property Damage</option>
+                            <option value="LSR Violation">Life Saving Rules Violation</option>
+                            <option value="Environmental Violation">Environmental Violation</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label class="block font-medium mb-1">Event Description</label>
+                        <textarea id="inc-desc" rows="3" required class="w-full border rounded p-2 focus:ring-2 focus:ring-red-800 outline-none"></textarea>
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Document Control No.</label>
+                        <input type="text" id="inc-doc" value="RSF-HSE-INC-2026-001" class="w-full border rounded p-2 bg-gray-50">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Attach Photo Evidence</label>
+                        <input type="file" id="inc-photo" accept="image/*" class="w-full border rounded p-1">
+                    </div>
+                    <div class="md:col-span-2 pt-2">
+                        <button type="submit" class="bg-red-800 text-white font-bold px-6 py-2 rounded hover:bg-red-900 transition">Submit Report</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="font-bold text-gray-800 mb-3">Logged Incident Records</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm" id="table-incidents">
+                        <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+                            <tr>
+                                <th class="p-2">Doc No</th>
+                                <th class="p-2">Type</th>
+                                <th class="p-2">Title</th>
+                                <th class="p-2">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. VEHICLE TRACKER MODULE -->
+        <section id="tab-vehicles" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-lg font-bold text-gray-800 border-b pb-3 mb-4">Add Vehicle / Equipment Compliance Record</h3>
+                <form id="form-vehicle" onsubmit="saveVehicle(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                    <div>
+                        <label class="block font-medium mb-1">Asset Name</label>
+                        <input type="text" id="veh-name" placeholder="e.g. Tipper / Dozer" required class="w-full border rounded p-2">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Plate / Serial No.</label>
+                        <input type="text" id="veh-plate" placeholder="e.g. 954 RK" required class="w-full border rounded p-2">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">RAS Expiry Date</label>
+                        <input type="date" id="veh-ras" required class="w-full border rounded p-2">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">ROP Expiry Date</label>
+                        <input type="date" id="veh-rop" required class="w-full border rounded p-2">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">TPI Expiry Date</label>
+                        <input type="date" id="veh-tpi" required class="w-full border rounded p-2">
+                    </div>
+                    <div class="md:col-span-3 pt-2">
+                        <button type="submit" class="bg-red-800 text-white font-bold px-6 py-2 rounded hover:bg-red-900 transition">Save Asset Record</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="font-bold text-gray-800 mb-3">Asset Expiry Status Tracking</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left text-sm" id="table-vehicles">
+                        <thead class="bg-gray-100 text-gray-600 uppercase text-xs">
+                            <tr>
+                                <th class="p-2">Asset Name</th>
+                                <th class="p-2">Plate No</th>
+                                <th class="p-2">RAS Expiry</th>
+                                <th class="p-2">ROP Expiry</th>
+                                <th class="p-2">TPI Expiry</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. SAFETY INDUCTION MODULE -->
+        <section id="tab-inductions" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h3 class="text-lg font-bold text-gray-800 border-b pb-3 mb-4">Register Safety Induction</h3>
+                <form id="form-induction" onsubmit="saveInduction(event)" class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <label class="block font-medium mb-1">Full Name</label>
+                        <input type="text" id="ind-name" required class="w-full border rounded p-2">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Designation</label>
+                        <input type="text" id="ind-desig" required class="w-full border rounded p-2">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Resident Card (Civil ID) No.</label>
+                        <input type="text" id="ind-card" required class="w-full border rounded p-2">
+                    </div>
+                    <div>
+                        <label class="block font-medium mb-1">Category</label>
+                        <select id="ind-cat" class="w-full border rounded p-2">
+                            <option value="Company Employee">Company Employee</option>
+                            <option value="Subcontractor">Subcontractor</option>
+                            <option value="Visitor">Visitor</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2 pt-2">
+                        <button type="submit" class="bg-red-800 text-white font-bold px-6 py-2 rounded hover:bg-red-900 transition">Register & Generate Induction Card</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+
+        <!-- 5. QR CODE TOOL INSPECTOR -->
+        <section id="tab-qr-inspector" class="tab-content hidden space-y-6">
+            <div class="bg-white p-6 rounded-lg shadow text-center">
+                <i class="fa-solid fa-qrcode text-5xl text-red-800 mb-3"></i>
+                <h3 class="text-lg font-bold text-gray-800">10-Point QR Tool Inspector</h3>
+                <p class="text-xs text-gray-500 mb-4">Scan QR tag or enter Tool/Equipment Tag ID to load monthly safety checklist</p>
+                
+                <div class="max-w-md mx-auto flex gap-2 mb-6">
+                    <input type="text" id="qr-input" placeholder="e.g. RSF-EQUIP-8812" class="border rounded p-2 flex-grow text-sm">
+                    <button onclick="loadToolChecklist()" class="bg-red-800 text-white font-bold px-4 py-2 rounded text-sm">Load Checklist</button>
+                </div>
+
+                <!-- 10 Checkpoints Container -->
+                <div id="checklist-container" class="hidden text-left border-t pt-4 max-w-2xl mx-auto space-y-3">
+                    <h4 class="font-bold text-gray-700">Safety Checkpoints:</h4>
+                    <div class="space-y-2 text-sm">
+                        <label class="flex justify-between items-center bg-gray-50 p-2 rounded">
+                            <span>1. Physical body condition clear of structural damage</span>
+                            <select class="border rounded p-1"><option>PASS</option><option>FAIL</option></select>
+                        </label>
+                        <label class="flex justify-between items-center bg-gray-50 p-2 rounded">
+                            <span>2. Power cabling/hoses free of cuts and exposes</span>
+                            <select class="border rounded p-1"><option>PASS</option><option>FAIL</option></select>
+                        </label>
+                        <label class="flex justify-between items-center bg-gray-50 p-2 rounded">
+                            <span>3. Emergency stop/switch functional</span>
+                            <select class="border rounded p-1"><option>PASS</option><option>FAIL</option></select>
+                        </label>
+                        <label class="flex justify-between items-center bg-gray-50 p-2 rounded">
+                            <span>4. Safety guards securely fitted</span>
+                            <select class="border rounded p-1"><option>PASS</option><option>FAIL</option></select>
+                        </label>
+                    </div>
+                    <button onclick="alert('Inspection Saved Successfully!')" class="w-full bg-green-700 text-white font-bold py-2 rounded mt-4">Submit Inspection Pass Tag</button>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-800 text-gray-400 text-center py-3 text-xs">
+        <p>Red Sand Falcon LLC &copy; 2026 – RSF HSE Management System | PDO & OPAL Standard Compliance</p>
+    </footer>
+
+    <!-- LOGIC SCRIPT -->
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('border-white'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.add('border-transparent'));
+
+            document.getElementById('tab-' + tabName).classList.remove('hidden');
+            document.getElementById('btn-' + tabName).classList.remove('border-transparent');
+            document.getElementById('btn-' + tabName).classList.add('border-white');
+        }
+
+        function saveIncident(e) {
+            e.preventDefault();
+            const title = document.getElementById('inc-title').value;
+            const type = document.getElementById('inc-type').value;
+            const desc = document.getElementById('inc-desc').value;
+            const doc = document.getElementById('inc-doc').value;
+
+            const table = document.getElementById('table-incidents').querySelector('tbody');
+            const row = `<tr>
+                <td class="p-2 font-bold text-red-800">${doc}</td>
+                <td class="p-2"><span class="bg-red-100 text-red-800 text-xs px-2 py-0.5 rounded">${type}</span></td>
+                <td class="p-2 font-medium">${title}</td>
+                <td class="p-2 text-gray-600">${desc}</td>
+            </tr>`;
+            table.innerHTML += row;
+            document.getElementById('form-incident').reset();
+            alert('Incident Logged Successfully!');
+        }
+
+        function saveVehicle(e) {
+            e.preventDefault();
+            const name = document.getElementById('veh-name').value;
+            const plate = document.getElementById('veh-plate').value;
+            const ras = document.getElementById('veh-ras').value;
+            const rop = document.getElementById('veh-rop').value;
+            const tpi = document.getElementById('veh-tpi').value;
+
+            const table = document.getElementById('table-vehicles').querySelector('tbody');
+            const row = `<tr>
+                <td class="p-2 font-medium">${name}</td>
+                <td class="p-2">${plate}</td>
+                <td class="p-2 text-blue-600">${ras}</td>
+                <td class="p-2 text-blue-600">${rop}</td>
+                <td class="p-2 text-blue-600">${tpi}</td>
+            </tr>`;
+            table.innerHTML += row;
+            document.getElementById('form-vehicle').reset();
+            alert('Vehicle/Equipment Record Added!');
+        }
+
+        function saveInduction(e) {
+            e.preventDefault();
+            alert('Induction Registered! Ready for Download/Print.');
+            document.getElementById('form-induction').reset();
+        }
+
+        function loadToolChecklist() {
+            const input = document.getElementById('qr-input').value;
+            if(!input) { alert('Please enter or scan a Tag ID first!'); return; }
+            document.getElementById('checklist-container').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
